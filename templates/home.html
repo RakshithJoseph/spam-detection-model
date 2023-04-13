@@ -15,14 +15,28 @@
   </head>
   <body class="bd">
     <div class="container m-5 p-2 border border-dark rounded text-center">
+      <form action="{{url_for('predict1')}}" method="post">
+        <h1 class="text-center border border-dark rounded m-4 p-2" id="c1">
+          Detect message is Spam or Ham
+        </h1>
+        <h3>Enter Your Message :</h3>
+        <textarea
+          name="msg"
+          class="md-textarea form-control rounded-3"
+          id="msg"
+          cols="20"
+          rows="5"
+        ></textarea>
+        <br />
+        <button class="btn btn-outline-danger" type="submit">Predict</button>
+        <h2>Output:</h2>
+        <p>{{prediction_text}}</p>
+      </form>
       <form
         action="{{url_for('predict')}}"
         method="post"
         enctype="multipart/form-data"
       >
-        <h1 class="text-center border border-dark rounded m-4 p-2" id="c1">
-          Detect message is Spam or Ham
-        </h1>
         <h3>Upload a CSV file containing messages:</h3>
         <input type="file" name="file" class="form-control-file" /><br />
 

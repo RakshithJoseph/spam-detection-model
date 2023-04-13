@@ -6,11 +6,22 @@ import pickle
 from sklearn.linear_model import LogisticRegression
 from sklearn.feature_extraction.text import CountVectorizer
 vect = pickle.load(open('vec.pkl', 'rb'))
+model = pickle.load(open('mdel.pkl', 'rb'))
 app = Flask(__name__)
 
 @app.route('/')
 def home():
     return render_template('home.html')
+
+@app.route('/predict1', methods=['GET', 'POST'])
+def predict1():
+
+    comment = request.form.get('msg')
+    data = [comment]
+    input_data_features = vect.transform(data).toarray()
+
+    my_prediction = model.predict(input_data_features)
+    return render_template('home.html', prediction_text='The entered message is {}'.format(my_prediction))
 
 @app.route('/predict', methods=['GET', 'POST'])
 def predict():
@@ -33,7 +44,7 @@ def predict():
         
         count = vect.transform(df['clean'])
         
-        model = pickle.load(open('mdel.pkl', 'rb'))
+        
         
         predictions = model.predict(count)
         
